@@ -1,30 +1,42 @@
- const App= React.createClass({
-     getInitialState: function () {
+const LikeButton = React.createClass({
+    getInitialState: function() {
+        return {name: 'peter'};
+    },
+    componentWillMount:function () {
+        console.log(this.state.name + "1");
+        this.setState({name:'mark'},function () {
+            console.log(this.state.name + "2");
+        })
+    },
+    componentDidMount:function () {
+        console.log(this.state.name + "1");
+        this.setState({name:'mary'},function () {
+            console.log(this.state.name + "2");
+        })
+    },
+    render: function() {
+
+        return (
+            <div>
+                hello,{this.state.name}
+                <Default />
+            </div>
+        );
+    }
+});
+
+const Default = React.createClass({
+     getDefaultProps: function() {
          return {
-             count: 0
+             value: 'default value'
          }
      },
-     add:function () {
-         this.setState({count: this.state.count + 1});
-     },
      render:function() {
-     return <div>
-         <Count count={this.state.count} addC={this.add}/>
-         <NotesList />
-     </div>
+     return <div>{this.props.value}</div>
      }
  });
 
-  const Count = React.createClass({
-      adds:function(){
-        this.props.addC();
-      },
-      render:function() {
-      return <div>
-          {this.props.count}
-          <button onClick={this.adds}>+</button>
-      </div>
-      }
-  });
- 
- ReactDOM.render(<App />, document.getElementById('content'));
+ReactDOM.render(
+    <LikeButton />,
+    document.getElementById('content')
+);
